@@ -1,7 +1,10 @@
 public class ThreadedProcess implements Runnable{
-    public String threadId;
+    public int counter;
+    private final int rounds = 100000;
     @Override
     public void run() {
-        System.out.println("Hello world in thread named " + threadId + "!");
+        for(int i = 0; i < rounds; i++) {
+            counter++;
+        }
     }
 }
