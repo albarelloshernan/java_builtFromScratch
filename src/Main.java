@@ -1,14 +1,13 @@
 public class Main {
     public static void main(String[] args) {
+        ThreadedProcess t1, t2;
+        t1 = new ThreadedProcess("Thread-1");
+        t2 = new ThreadedProcess("Thread-2");
+        t1.t.start();
+        t2.t.start();
         try{
-            ThreadedProcess tp = new ThreadedProcess();
-            Thread t1 = new Thread(tp, "Thread_1");
-            Thread t2 = new Thread(tp, "Thread_2");
-            t1.start();
-            t2.start();
-            t1.join();
-            t2.join();
-            System.out.println(tp.counter);
+            t1.t.join();
+            t2.t.join();
         } catch (InterruptedException e) {
             System.out.println("Interrupted in Main!");
         }
