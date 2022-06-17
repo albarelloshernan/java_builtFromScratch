@@ -21,9 +21,17 @@ public class ThreadedProcess implements Runnable{
         String name = Thread.currentThread().getName();
         id = name.equals("Thread-0") ? 1 : 2;
         for (int i = 0; i < rounds; i++) {
-            synchronized (counter) {
-                counter.incrementAndGet();
-                System.out.println("Count: " + counter + " in Thread-" + id);
+            try {
+                synchronized (counter) {
+                    while (counter.get() != i) {
+                        counter.wait();
+                    }
+                    counter.incrementAndGet();
+                    counter.notifyAll();
+                    System.out.println("Count: " + counter + " in Thread-" + id);
+                }
+            } catch (InterruptedException e) {
+                System.out.println("Interrupted in printMsg2!");
             }
         }
     }
